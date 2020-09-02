@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SOCKET.IO Chat</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+    </head>
+    <body>
+        <h1>SOCKET.IO Chat</h1>
+        <form action="" onsubmit="sendMessage(event)">
+            <input type="text" id="messageText" autocomplete="off"/>
+            <button>Send</button>
+        </form>
+        <ul id='messages' style="white-space: pre-line">
+        </ul>
+        <script>
+            const socket = io(location.origin + "/chat?token=abc");
+            // const socket = io(location.origin + "/chat?token=abc", {transports: ['websocket'], upgrade: false});
+
+            socket.on('connect', function (xx) {
+                console.log('Connected!', socket.connected);
+                console.log(xx);
+            });
+            socket.on('disconnect', function (xx) {
+                console.log('Disconnected!', socket.connected);
+                console.log(xx);
+            });
+            socket.on('message', function(data) {
+                var messages = document.getElementById('messages')
+                var message = document.createElement('li')
+                var content = document.createTextNode(data)
+                message.appendChild(content)
+                messages.appendChild(message)
+            });
+            function sendMessage(event) {
+                var input = document.getElementById("messageText")
+                socket.emit('message', input.value)
+                input.value = ''
+                event.preventDefault()
+            }
+        </script>
+    </body>
+</html>

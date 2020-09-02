@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  uwsgi_asgi_socketio_nginx:
+    container_name: asgi_socketio_nginx_uwsgi
+    image: asgi_socketio_nginx:uwsgi
+    build:
+      context: ./uwsgi
+      args:
+        - UWSGI_VERSION=cffi-asgi
+    volumes:
+      - ./socketio_application:/web:ro
+      - ./uwsgi:/usr/src/uwsgi/conf:ro
+    network_mode: bridge
+    ports:
+      - 8007:443
+      - 8800:8000
+      - "2224:22"
+
+  daphne_asgi_socketio_nginx:
+    container_name: asgi_socketio_nginx_daphne
+    image: asgi_socketio_nginx:daphne
+    build:
+      context: ./daphne
+    volumes:
+      - ./socketio_application:/web:ro
+      - ./daphne:/usr/src/daphne/conf:ro
+    network_mode: bridge
+    ports:
+      - 8007:443
+      - 8800:8000
+      - "2224:22"

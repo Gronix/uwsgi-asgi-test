@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export PYTHONASYNCIODEBUG=1
+export PYTHONPATH=$PYTHONPATH:$SRC_PATH:$SRC_PATH/plugins/cffi:/web
+/usr/bin/uwsgi --emperor /etc/uwsgi/emperor.ini
