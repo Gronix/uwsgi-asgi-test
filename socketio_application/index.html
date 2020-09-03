@@ -13,8 +13,8 @@
         <ul id='messages' style="white-space: pre-line">
         </ul>
         <script>
-            const socket = io(location.origin + "/chat?token=abc");
-            // const socket = io(location.origin + "/chat?token=abc", {transports: ['websocket'], upgrade: false});
+            // const socket = io(location.origin + "/chat?token=abc");
+            const socket = io(location.origin + "/chat?token=abc", {transports: ['websocket'], upgrade: false});
 
             socket.on('connect', function (xx) {
                 console.log('Connected!', socket.connected);
